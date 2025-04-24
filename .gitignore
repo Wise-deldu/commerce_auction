@@ -1,0 +1,40 @@
+# Django
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.cache
+migrations/
+
+# Static files
+staticfiles/
+
+# Media files
+media/
+
+# Virtual environment
+myenv/
+.venv/
+Pipfile.lock
+
+# Sensitive files
+.env
+.env.local
+
+# Logs
+*.log
+
+# IDEs
+.idea/
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.swp
+*.swo
+*~

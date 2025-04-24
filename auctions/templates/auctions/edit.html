@@ -1,0 +1,54 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Edit Listing: {{ listing.title }}</h2>
+
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+            {% for field in form %}
+                {% if field.errors %}
+                    {{ field.label }}: {{ field.errors }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form action="{% url 'auctions:edit_listing' listing.id %}" method="post" enctype="mulitpart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_title">Title</label>
+            {{ form.title }}
+        </div>
+        <div class="form-group">
+            <label for="id_description">Description</label>
+            {{ form.description }}
+        </div>
+        <div class="form-group">
+            <label for="id_starting_bid">Starting Bid</label>
+            {{ form.starting_bid }}
+        </div>
+        <div class="form-group">
+            <label for="id_image">Image Upload</label>
+            {{ form.image }}
+            <small class="form-text text-muted">Upload a new image file (or provide a URL below). Current: {% if listing.image %}{{ listing.image.url }}{% endif %}</small>
+        </div>
+        <div class="form-group">
+            <label for="id_image_url">Image URL</label>
+            {{ form.image_url }}
+            <small class="form-text text-muted">Enter a new image URL (or upload an image above). Current: {% if listing.image_url %}{{ listing.image_url }} {% endif %}</small>
+        </div>
+        <div class="form-group">
+            <label for="id_category">Category (optional)</label>
+            {{ form.category }}
+        </div>
+        <div class="form-group">
+            <label for="id_duration_days">Auction Duration (days)</label>
+            {{ form.duration_days }}
+        </div>
+        <input class="btn btn-primary" type="submit" value="Save Changes">
+        <a href="{% url 'auctions:listing' listing.id %}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock %}

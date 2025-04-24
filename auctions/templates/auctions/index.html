@@ -1,0 +1,39 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}Active Listings{% endif %} - Auctions
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h2 class="mb-4">
+            {% if category %}{{ category.name }}{% else %}Active Listings{% endif %}
+        </h2>
+    </div>
+    {% for listing in listings %}
+        <div class="listing row align-items-start mb-4">
+            <div class="col-md-4">
+                {% if listing.get_image_source %}
+                    <img src="{{ listing.get_image_source }}" alt="{{ listing.title }}" class="img-fluid listing-image">
+                {% else %}
+                    <div class="no-image-placeholder text-center">
+                        <span>No Image Available</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <h3><a href="{% url 'auctions:listing' listing.id %}">{{ listing.title }}</a></h3>
+                <p>{{ listing.description }}</p>
+                <p><strong>Current Price:</strong> ₵{{ listing.current_price|floatformat:2 }}</p>
+                <p><strong>Created:</strong> {{ listing.created_at }}</p>
+                <p><strong>Ends:</strong> {{ listing.end_date }}</p>
+            </div>
+        </div>
+        {% if not forloop.last %}
+            <hr class="listing-divider">
+        {% endif %}
+    {% empty %}
+        <p class="text-muted ml-4">No active listings.</p>
+    {% endfor %}
+{% endblock %}
